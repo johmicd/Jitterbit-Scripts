@@ -30,7 +30,7 @@ h -> 68 (valid)
 */
 
 
-script_name="Validate_String"
+script_name="Validate_String";
 error_mesg="";
 input=IfEmpty(_1, RaiseError("Arg 1 for script "+script_name+" is empty."));
 
