@@ -1,0 +1,78 @@
+<trans>
+/*
+use this script with in the runscript function to return the output variable.
+to customize add to array valid_char_arr
+(c) 2017 Enrollment Rx, LLC. All Rights Reserved
+
+input - string to valid 
+output - is a line per character and it's hex value and whether it is valid or invalid
+example 
+############# Rafee’Ah Zakiyyah ################
+R -> 52 (valid)
+a -> 61 (valid)
+f -> 66 (valid)
+e -> 65 (valid)
+e -> 65 (valid)
+’ -> e28099 (invalid)
+A -> 41 (valid)
+h -> 68 (valid)
+  -> 20 (valid)
+Z -> 5a (valid)
+a -> 61 (valid)
+k -> 6b (valid)
+i -> 69 (valid)
+y -> 79 (valid)
+y -> 79 (valid)
+a -> 61 (valid)
+h -> 68 (valid)
+*/
+
+
+script_name="Validate_String"
+error_mesg="";
+input=IfEmpty(_1, RaiseError("Arg 1 for script "+script_name+" is empty."));
+
+output="";
+valid_hex_arr=Array();
+
+	valid_char_arr=Array();
+	valid_char_arr={
+	 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+	,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+	,'0','1','2','3','4','5','6','7','8','9'
+	," "  //space
+//	,'\'' //quote
+//	,'"'
+	,"-"
+	,","
+	,'.'
+	};
+
+valid_idx=0;
+valid_len=Length(valid_char_arr);
+
+While(valid_idx<valid_len,
+	Set(valid_hex_arr, StringToHex(valid_char_arr[valid_idx]), -1);
+	valid_idx++;
+);
+
+output+="############# "+input+" ################\r\n";
+i=0;len=Length(input);
+While(i<len,
+	char=Mid(input,i,1);
+	char_hex=StringToHex(char);
+	char_test=(Eval(Exist(char_hex,valid_hex_arr),false));
+//	char_test=(IsValidString(char)|| Eval(Exist(char_hex,valid_hex_arr),false));
+	test_result=if(char_test,"valid","invalid");
+	If(char_test==false,
+		fn_test=false;
+		output+= char + " -> "+char_hex+" ("+test_result+")\r\n";
+//		error_mesg+= char + " Hex->"+char_hex+" Result: "+test_result+"\r\n";
+		error_mesg+= char + " Hex["+char_hex+"]\r\n";
+		,//else
+		output+= char + " -> "+char_hex+" ("+test_result+")\r\n"
+	);
+	i++;
+);
+output;
+</trans>
