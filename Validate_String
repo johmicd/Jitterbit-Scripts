@@ -6,7 +6,9 @@ to customize add to array valid_char_arr
 
 input - string to valid 
 output - is a line per character and it's hex value and whether it is valid or invalid
-example 
+==example== 
+RunScript("<TAG>Scripts/07 - Utility Scripts/functions/Validate_String</TAG>","Rafee’Ah Zakiyyah");
+returns
 ############# Rafee’Ah Zakiyyah ################
 R -> 52 (valid)
 a -> 61 (valid)
